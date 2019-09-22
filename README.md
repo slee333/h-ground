@@ -29,20 +29,17 @@ yarn install (or) npm install
 ## 1.3 Prisma 계정 만들기, Prisma 설치하기
 
 
-#### 1.3.1 계정 만들기
+#### 1.3.1 Prisma 계정
 
-제가 여러분들 이메일로 Prisma 초대를 보냈어요.
+dhhhground@gmail.com 이란 Prisma 계정을 만들었어요. 비밀번호는 slack 백엔드 채널에 보내놓았어요.
 
-    Prisma Cloud - invite to workspace "dhh10-workspace"
-
-
-이런 제목으로 갔을거에요. Join workspace를 눌러 Prisma 아이디를 만들어주세요.
-그럼 dhh-10 workspace에 들어가실 수 있을거에요. 그 안에 보면 dhh10-project란 서비스가 있을텐데 이게 저희 데이터베이스입니다.
+이 아이디로 prisma.io에서 로그인하면 dhh-10 workspace에 들어가실 수 있을거에요. 
+그 안에 보면 dhh10-project란 서비스가 있을텐데 이게 저희 데이터베이스입니다.
 (프리즈마에서 무료로 제공하는 데모 서버입니다)
 
 #### 1.3.2 프리즈마 설치하기
 
-아래 커맨드를 하나씩 실행해주세요. prisma deploy를 하려 할때 팝업이 떠서 인증을 하라고 할텐데, 초록색 인증 버튼을 누르시면 됩니다.
+아래 커맨드를 하나씩 실행해주세요. prisma deploy를 하려 할때 팝업이 떠서 (이미 dhhground@gmail.com 로그인이 되어있다면)인증을 하라고, 그게 아니면 로그인을 하라고 할텐데 인증이나 로그인 해주시면 됩니다.
 ```
 prisma deploy
 prisma generate
