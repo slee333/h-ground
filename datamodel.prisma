@@ -1,0 +1,114 @@
+type User {
+  id: ID! @id
+  userName: String! @unique
+  name: String
+  email: String! @unique
+  bio: String
+  threads: [Thread!]!
+  likes: [Like!]!
+  comments: [Comment!]!
+  followers: [User!]! @relation(name:"FollowRelation")
+  following: [User!]! @relation(name:"FollowRelation")
+  rooms: [Room!]!
+  hospitals: [Hospital]!
+  role: UserRoles! @default(value: PATIENT)
+  createdAt: DateTime! @createdAt
+  tois: [String!]! @scalarList(strategy: RELATION)
+  loginSecret: String
+}
+
+enum UserRoles {
+  ADMIN
+  STAFF
+  PATIENT
+}
+
+type Hospital {
+  id: ID! @id
+  members: [User!]!
+  createdAt: DateTime! @createdAt
+}
+
+type Thread {
+  id: ID! @id
+  files: [File]!
+  location: String
+  caption: String!
+  likes: [Like!]!
+  comments: [Comment!]!
+  user: User!
+  hospital: Hospital
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Like {
+  id: ID! @id
+  user: User!
+  thread: Thread!
+}
+
+type Comment {
+  id: ID! @id
+  text: String!
+  user: User!
+  thread: Thread!
+  hospital: Hospital
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type File {
+  id: ID! @id
+  url: String!
+  thread: Thread!
+}
+
+type Room {
+  id: ID! @id
+  participants: [User!]!
+  messages: [Message]!
+}
+
+type Message {
+  id: ID! @id
+  from: User!
+  room: Room!
+  text: String!
+  createdAt: DateTime! @createdAt
+}
+
+type Survey {
+  id: ID! @id
+  surveyTitle: String!
+  surveyCaption: String
+  questions: [Question!]!
+  createdAt: DateTime! @createdAt
+  createdBy: Hospital!
+  status: SurveyStatus! @default(value: NotCompleted)
+  isOriginal: Boolean! @default(value: true)
+  sentTo: User
+}
+
+enum SurveyStatus {
+  Completed
+  Removed
+  NotCompleted  
+}
+
+type Question {
+  id: ID! @id
+  ask: String!
+  answer: Int
+}
+
+type Alarm {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  createdBy: Hospital!
+  sentTo: User
+  alarmTitle: String!
+  alarmCaption: String
+  ringsAt: [DateTime!]! @scalarList(strategy: RELATION)
+  isOriginal: Boolean! @default(value: true)
+}

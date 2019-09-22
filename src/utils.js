@@ -1,0 +1,34 @@
+import nodemailer from "nodemailer";
+import sgTransport from "nodemailer-sendgrid-transport";
+import jwt from "jsonwebtoken";
+
+export const generateSecret = () => {
+  const randomNumber = Math.random()
+    .toString(36)
+    .substring(2, 8);
+  return `${randomNumber}`;
+};
+
+const sendMail = email => {
+  const options = {
+    auth: {
+      api_user: process.env.SENDGRID_USERNAME,
+      api_key: process.env.SENDGRID_PASSWORD
+    }
+  };
+  const client = nodemailer.createTransport(sgTransport(options));
+  return client.sendMail(email);
+};
+
+export const sendSecretmail = (address, secret) => {
+  const email = {
+    from: "randomguy@fromrandomworld.com",
+    to: address,
+    subject: "LOGIN SECRET!! DO NOT SHOW THIS TO OTHERS",
+    html: `Hello! Your login secret is <strong>${secret}<strong>. <br/>웹사이트로 돌아가서 로그인하십셔`
+  };
+  sendMail(email)
+};
+
+// Generate web token based on secret.
+export const generateToken = id => jwt.sign({ id }, process.env.JWT_SECRET); 

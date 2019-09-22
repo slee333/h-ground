@@ -1,0 +1,116 @@
+scalar DateTime
+
+type User {
+  id: ID!
+  userName: String!
+  email: String!
+  name: String
+  bio: String
+  threads: [Thread!]!
+  likes: [Like!]!
+  comments: [Comment!]!
+  followers: [User!]!
+  following: [User!]!
+  rooms: [Room!]!
+  hospitals: [Hospital]!
+  role: UserRoles!
+  createdAt: DateTime!
+  tois: [String!]!
+  loginSecret: String
+}
+
+enum UserRoles {
+  ADMIN
+  STAFF
+  PATIENT
+}
+
+type Hospital {
+  id: ID!
+  members: [User!]!
+  createdAt: DateTime!
+}
+
+type Thread {
+  id: ID!
+  files: [File]!
+  location: String
+  caption: String!
+  likes: [Like!]!
+  comments: [Comment!]!
+  user: User!
+  hospital: Hospital
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Like {
+  id: ID!
+  user: User!
+  thread: Thread!
+}
+
+type Comment {
+  id: ID!
+  text: String!
+  user: User!
+  thread: Thread!
+  hospital: Hospital
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type File {
+  id: ID!
+  url: String!
+  thread: Thread!
+}
+
+type Room {
+  id: ID!
+  participants: [User!]!
+  messages: [Message]!
+}
+
+type Message {
+  id: ID!
+  from: User!
+  room: Room!
+  text: String!
+  createdAt: DateTime!
+}
+
+type Survey {
+  id: ID!
+  surveyTitle: String!
+  surveyCaption: String
+  questions: [Question!]!
+  createdAt: DateTime!
+  createdBy: Hospital!
+  status: SurveyStatus!
+  isOriginal: Boolean!
+  sentTo: User
+}
+
+enum SurveyStatus {
+  Completed
+  Removed
+  NotCompleted
+}
+
+type Question {
+  id: ID!
+  ask: String!
+  answer: Int
+}
+
+type Alarm {
+  id: ID!
+  createdAt: DateTime!
+  createdBy: Hospital!
+  sentTo: User
+  alarmTitle: String!
+  alarmCaption: String
+  ringsAt: [DateTime!]!
+  isOriginal: Boolean!
+}
